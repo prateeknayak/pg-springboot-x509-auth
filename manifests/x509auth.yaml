@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: x509-auth-app
+  labels:
+    app: x509-auth-app
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      targetPort: 8443
+      protocol: TCP
+  selector:
+    app: x509-auth-app
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: x509-auth-app
+  labels:
+    app: x509-auth-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: x509-auth-app
+  template:
+    metadata:
+      labels:
+        app: x509-auth-app
+    spec:
+      containers:
+        - name: x509-auth-app
+          image: pnyak/mssltest:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/prometheus
+          #     port: 8080
+          #   initialDelaySeconds: 50 #Spring boot, faaarkkk
+          #   periodSeconds: 15
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/prometheus
+          #     port: 8080
+          #   initialDelaySeconds: 50 #Spring boot, faaarkkk
+          #   periodSeconds: 15

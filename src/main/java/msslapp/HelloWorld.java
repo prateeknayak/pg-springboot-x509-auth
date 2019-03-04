@@ -12,4 +12,9 @@ public class HelloWorld {
         return String.format("mssl endpoint!  %s", principal.getName());
     }
 
+    @RequestMapping("/insecure")
+    public String insecure() {
+        return String.format("Hello Insecure World!");
+    }
+
 }

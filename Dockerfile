@@ -6,18 +6,15 @@ COPY ./ /app/
 
 USER root
 
-# RUN ./gradlew build
+RUN ./gradlew build
 
 FROM openjdk:13-alpine
 
 COPY .pki /app/.pki
-RUN keytool \
-        -importcert \
-        -trustcacerts -file /app/.pki/msslapp.crt \
-        -alias msslapp \
-        -keystore /app/keystore.jks \
-        -storepass password \
-        -noprompt
+
+RUN keytool -importkeystore -deststorepass password -destkeystore /app/keystore.jks -srckeystore /app/.pki/msslapp.p12 -srcstoretype PKCS12 -srcstorepass password
+
+RUN keytool -import -alias bundle -trustcacerts -file /app/.pki/rootCA.crt -keystore /app/keystore.jks -storepass password -noprompt
 
 FROM openjdk:13-alpine
 

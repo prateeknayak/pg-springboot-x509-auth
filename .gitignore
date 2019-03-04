@@ -1,6 +1,5 @@
 .idea
 .vscode
-pki
 .pki
 .gradle
 keystore.jks
