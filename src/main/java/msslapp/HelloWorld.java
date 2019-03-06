@@ -14,7 +14,7 @@ public class HelloWorld {
 
     @RequestMapping("/insecure")
     public String insecure() {
-        return String.format("Hello Insecure World!");
+        return "Hello Insecure World!";
     }
 
 }
