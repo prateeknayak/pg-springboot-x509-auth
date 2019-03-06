@@ -26,12 +26,10 @@ public class Config extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return (username -> {
-            if (username.equals("msslappo")) {
+            if (username.equals("msslapp")) {
                 return new User(username, "", AuthorityUtils.commaSeparatedStringToAuthorityList( "ROLE_USER"));
-            } else {
-                return null;
             }
+            return null;
         });
     }
-
 }
