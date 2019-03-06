@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: x509-auth-app
+  labels:
+    app: x509-auth-app
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      targetPort: 8443
+      protocol: TCP
+  selector:
+    app: x509-auth-app
