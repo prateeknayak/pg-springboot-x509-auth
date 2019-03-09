@@ -27,19 +27,15 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-#          command:
-#            - tail
-#            - -f
-#            - /dev/null
-          # livenessProbe:
-          #   httpGet:
-          #     path: /actuator/prometheus
-          #     port: 8080
-          #   initialDelaySeconds: 50 #Spring boot, faaarkkk
-          #   periodSeconds: 15
-          # readinessProbe:
-          #   httpGet:
-          #     path: /actuator/prometheus
-          #     port: 8080
-          #   initialDelaySeconds: 50 #Spring boot, faaarkkk
-          #   periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /actuator/prometheus
+              port: 8080
+            initialDelaySeconds: 50 #Spring boot, faaarkkk
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/prometheus
+              port: 8080
+            initialDelaySeconds: 50 #Spring boot, faaarkkk
+            periodSeconds: 15
