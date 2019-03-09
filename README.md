@@ -15,7 +15,6 @@ In this example we will look at setting up a Spring Boot application which plays
   
 - Certificate generation script (bin/gencert.sh)
 - Dockerfile
-    - Baked in keystore and trustore DO NOT DO THIS
-    **TODO fix this or else some one will defo copy this and regret visiting this repo**
+    - Baked in keystore and trustore DO NOT DO THIS!!!! (**TODO: fix this or else some one will defo copy this and regret visiting this repo**)
 
 
