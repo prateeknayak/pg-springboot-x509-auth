@@ -1,4 +1,4 @@
-package msslapp;
+package msslserver;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,7 +26,7 @@ public class Config extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return (username -> {
-            if (username.equals("msslapp")) {
+            if (username.equals("msslserver")) {
                 return new User(username, "", AuthorityUtils.commaSeparatedStringToAuthorityList( "ROLE_USER"));
             }
             return null;
