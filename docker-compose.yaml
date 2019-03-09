@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+
+  openssl:
+    image: pnyak/openssl
+    working_dir: /app
+    volumes:
+    - .:/app
+    entrypoint:
+    - ./bin/gencert.sh
+
+  javastores:
+    image: openjdk:13-alpine
+    working_dir: /app
+    volumes:
+    - .:/app
+    entrypoint:
+    - ./bin/jks_stores.sh
+
+  kubectl:
+    image: pnyak/gcloud-kubectl
+    working_dir: /app
+    volumes:
+    - .:/app
+    entrypoint:
+    - ./bin/deploy.sh
+
+  msslserver:
+    build:
+      context: .
+    image: pnyak/mssltest
+    working_dir: /app
+    volumes:
+    - .pki/truststore.jks:/app/truststore.jks
+    - .pki/keystore.jks:/app/keystore.jks
+    entrypoint:
+    - java
+    - -Djavax.net.debug=all
+    - -jar
+    - /app/msslserver.jar
+
