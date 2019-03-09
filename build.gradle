@@ -1,4 +1,4 @@
-group 'sample-app'
+group 'mssl-server'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -24,13 +24,13 @@ repositories {
 compileJava {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-    mainClassName       = "msslapp.Application"
+    mainClassName       = "msslserver.Application"
 }
 
 
 jar {
     baseName = "springboot-x509"
-    group    = "mssl-app"
+    group    = "mssl-server"
     version  = "0.0.1-SNAPSHOT"
 }
 
@@ -38,7 +38,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-security")
-
+    compile('io.micrometer:micrometer-core')
+    compile('io.micrometer:micrometer-registry-prometheus')
     testCompile("junit:junit")
 }
 
