@@ -22,6 +22,7 @@ services:
     working_dir: /app
     volumes:
     - .:/app
+    - ${HOME}/.kube/config:/root/.kube/config
     entrypoint:
     - ./bin/deploy.sh
 

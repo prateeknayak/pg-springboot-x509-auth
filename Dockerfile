@@ -6,7 +6,7 @@ COPY ./ /app/
 
 USER root
 
-#RUN ./gradlew build
+RUN ./gradlew build
 
 FROM openjdk:13-alpine
 
