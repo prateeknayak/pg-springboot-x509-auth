@@ -29,13 +29,26 @@ spec:
               cpu: "500m"
           livenessProbe:
             httpGet:
-              path: /actuator/prometheus
-              port: 8080
+              path: /actuator/health
+              port: 8443
+              scheme: https
             initialDelaySeconds: 50 #Spring boot, faaarkkk
             periodSeconds: 15
           readinessProbe:
             httpGet:
-              path: /actuator/prometheus
-              port: 8080
+              path: /actuator/health
+              port: 8443
+              scheme: https
             initialDelaySeconds: 50 #Spring boot, faaarkkk
             periodSeconds: 15
+          volumeMounts:
+            - mountPath: /app/truststore.jks
+              name: jks
+              subPath: truststore.jks
+            - mountPath: /app/keystore.jks
+              name: jks
+              subPath: keystore.jks
+      volumes:
+      - name: jks
+        secret:
+          secretName: jks
