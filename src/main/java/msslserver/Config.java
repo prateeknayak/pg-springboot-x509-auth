@@ -16,6 +16,7 @@ public class Config extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/insecure").permitAll()
+                .antMatchers("/actuator/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .x509()

@@ -9,7 +9,7 @@ public class HelloWorld {
 
     @RequestMapping("/")
     public String index(Principal principal) {
-        return String.format("mssl endpoint!  %s", principal.getName());
+        return String.format("Hello Secure World! mssl user:  %s", principal.getName());
     }
 
     @RequestMapping("/insecure")
