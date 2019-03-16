@@ -6,3 +6,4 @@ keystore.jks
 build
 gradle
 out
+.srl
