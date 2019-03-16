@@ -15,7 +15,7 @@ services:
     volumes:
     - .:/app
     entrypoint:
-    - ./bin/jks_stores.sh
+    - ./bin/jks.sh
 
   kubectl:
     image: pnyak/gcloud-kubectl
@@ -32,8 +32,8 @@ services:
     image: pnyak/mssltest
     working_dir: /app
     volumes:
-    - .pki/truststore.jks:/app/truststore.jks
-    - .pki/keystore.jks:/app/keystore.jks
+    - .pki/truststore.jks:/app/.pki/truststore.jks
+    - .pki/keystore.jks:/app/.pki/keystore.jks
     entrypoint:
     - java
     - -Djavax.net.debug=all
