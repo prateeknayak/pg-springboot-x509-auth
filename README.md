@@ -12,9 +12,59 @@ In this example we will look at setting up a Spring Boot application which plays
 - Spring Boot app built using gradle
     - Config.java extends WebSecurityConf
     - HelloWorld.java provides rest endpoints
-  
+
 - Certificate generation script (bin/gencert.sh)
 - Dockerfile
-    - Baked in keystore and trustore DO NOT DO THIS!!!! (**TODO: fix this or else some one will defo copy this and regret visiting this repo**)
 
+## Setup
 
+### Generate certs (first time only)
+
+`docker-compose run openssl`
+
+OR ( needs openssl installed )
+
+`bin/gencert.sh`
+
+### Generate jks (first time only)
+
+`docker-compose run javastores`
+
+OR
+
+`bin/jks.sh`
+
+### Run server (locally)
+
+`docker-compose run -p 8443:8443 msslserver`
+
+The above command will the build the docker image from the Dockerfile and then run it.
+
+## Deploy mSSL server to kubernetes
+
+`bin/deploy.sh`
+
+## Testing mutual auth over SSL (mSSL / mTLS)
+
+`msslServer` has two endpoints
+
+- `/`: This is a secure endpoint which can only be accessed by the app which presents a valid ssl cert. For our example we will verify that the CN in the certificate is `msslapp`.
+- `/insecure`: This is a insecure endpoint which can be accessed without a valid ssl cert. This can be used for liveness / readiness probes.
+
+We will leverage cURL in order to test mSSL.
+
+###  Test `/` without cert
+
+`curl -v -k  https://localhost:8443/` 
+
+should give you output as follows
+```json
+{"timestamp":"2019-03-16T11:19:01.325+0000","status":403,"error":"Forbidden","message":"Access Denied","path":"/"}
+```
+
+`curl --cert .pki/msslapp.crt --key .pki/msslapp.key --cacert .pki/rootCA.crt  -v -k  https://localhost:8443/`
+
+should give you output as follows
+```json
+{"message":"Hello Secure World! msslapp"}
+``` 
