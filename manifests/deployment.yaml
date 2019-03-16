@@ -20,25 +20,30 @@ spec:
         - name: x509-auth-app
           image: pnyak/mssltest:latest
           imagePullPolicy: Always
+          command:
+          - java
+          - -Djavax.net.debug=all
+          - -jar
+          - /app/msslserver.jar
           resources:
             requests:
-              memory: "256Mi"
+              memory: "512Mi"
               cpu: "200m"
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "500m"
           livenessProbe:
             httpGet:
               path: /actuator/health
               port: 8443
-              scheme: https
+              scheme: HTTPS
             initialDelaySeconds: 50 #Spring boot, faaarkkk
             periodSeconds: 15
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8443
-              scheme: https
+              scheme: HTTPS
             initialDelaySeconds: 50 #Spring boot, faaarkkk
             periodSeconds: 15
           volumeMounts:
