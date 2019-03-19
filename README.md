@@ -17,15 +17,13 @@ Following image depicts a generic client-server `mTLS` handshake.
 
 In my experience getting this initial handshake right is the biggest hurdle. And I have seen many devs waste eons on trying to debug 403, 503 without looking for the obvious SSL handshake problems.
 
-## How to debug?
-
-We can deubg some of the common issues with this handshake using just `cURL` and enabling verbose logging on our application (java based spring boot app in our example)
-
-
-
 
 ## Sample Application
 In this example we will look at setting up a Spring Boot application which plays the role of server which checks the CN in the client cert. Then we will try to hit this service using cURL and try to debug our way through the 401, 403 etc.
+
+## How to debug?
+
+We can deubg some of the common issues with this handshake using just `cURL` and enabling verbose logging on our application. Set the `-Djavax.net.debug=all` system property to debug TLS handshake.
 
 
 ## Contents
@@ -76,12 +74,14 @@ We will leverage cURL in order to test mSSL.
 
 ###  Test `/` without cert
 
-`curl -v -k  https://localhost:8443/` 
+`curl -k  https://localhost:8443/` 
 
 should give you output as follows
 ```json
 {"timestamp":"2019-03-16T11:19:01.325+0000","status":403,"error":"Forbidden","message":"Access Denied","path":"/"}
 ```
+
+###  Test `/` with cert
 
 `curl --cert .pki/msslapp.crt --key .pki/msslapp.key --cacert .pki/rootCA.crt  -v -k  https://localhost:8443/`
 
