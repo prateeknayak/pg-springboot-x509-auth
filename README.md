@@ -1,9 +1,30 @@
 # pg-springboot-x509-auth
 
-Playground repository to build Mutual Authentication Over TLS (`mTLS`) or Mutual Authentication Over SSL (`mSSL`) with Spring Boot and Envoy.
+Playground repository to build Mutual Authentication Over TLS (`mTLS`) or Mutual Authentication Over SSL (`mSSL`) with Spring Boot.
 
-With the modern architecture applications are being deployed on distributed systems and there is a need to build a mechanism of trust by which a service can trust another service without having to exchange username and pass etc. `mTLS` / `mSSL` is one way of solving the above problem. But it has its own challenges, getting the initial handshake right is the biggest hurdle. And I have seen many devs waste eons on trying to debug 403, 503 without looking for the obvious SSL handshake.
 
+## What is mSSL / mTLS?
+
+Mutual authentication over SSL / TLS is the mechanism of establishing trust between two parties communicating with each other via the means of exchanging certificates issued by trusted CAs. 
+
+## Why mSSL / mTLS?
+
+With the modern architecture applications are being deployed on distributed systems and there is a need to build a mechanism of trust by which a service can trust another service without having to exchange username and pass etc. `mTLS` / `mSSL` is one way of solving the above problem.
+
+Following image depicts a generic client-server `mTLS` handshake.  
+
+![Mutual Authentication flow](img/mTLS.png "mTLS flow")
+
+In my experience getting this initial handshake right is the biggest hurdle. And I have seen many devs waste eons on trying to debug 403, 503 without looking for the obvious SSL handshake problems.
+
+## How to debug?
+
+We can deubg some of the common issues with this handshake using just `cURL` and enabling verbose logging on our application (java based spring boot app in our example)
+
+
+
+
+## Sample Application
 In this example we will look at setting up a Spring Boot application which plays the role of server which checks the CN in the client cert. Then we will try to hit this service using cURL and try to debug our way through the 401, 403 etc.
 
 
